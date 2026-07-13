@@ -556,7 +556,7 @@ input:checked+.slider:before{transform:translateX(20px);}
 .receipt-section-title{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--brand);margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--brand-pale);}
 .receipt-row{display:flex;padding:6px 0;font-size:14px;line-height:1.5;}
 .receipt-row .r-label{color:var(--brand-light);min-width:160px;flex-shrink:0;font-weight:500;}
-.receipt-row .r-value{color:var(--text);flex:1;word-break:break-word;}
+.receipt-row .r-value{color:var(--text);flex:1;word-break:break-word;white-space:pre-wrap;overflow-wrap:anywhere;}
 .receipt-prod-card{background:var(--brand-pale);border:1px solid var(--border);border-radius:4px;padding:16px 20px;margin-bottom:12px;}
 .receipt-prod-card h4{font-size:13px;font-weight:700;color:var(--brand-dark);margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .receipt-prod-card .reg-num{font-size:12px;color:var(--success);font-weight:600;background:rgba(46,125,94,.1);padding:2px 10px;border-radius:10px;}
@@ -595,7 +595,7 @@ input:checked+.slider:before{transform:translateX(20px);}
 .receipt-section-title{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--brand);margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--brand-pale);}
 .receipt-row{display:flex;padding:6px 0;font-size:14px;line-height:1.5;}
 .receipt-row .r-label{color:var(--brand-light);min-width:180px;flex-shrink:0;font-weight:500;}
-.receipt-row .r-value{color:var(--text);flex:1;word-break:break-word;}
+.receipt-row .r-value{color:var(--text);flex:1;word-break:break-word;white-space:pre-wrap;overflow-wrap:anywhere;}
 .receipt-file-gallery{display:flex;flex-wrap:wrap;gap:8px;}
 .receipt-file-thumb{width:96px;border:1px solid var(--border);border-radius:4px;background:#fff;overflow:hidden;}
 .receipt-file-thumb img{display:block;width:96px;height:72px;object-fit:cover;background:var(--cream);}
@@ -648,7 +648,7 @@ input:checked+.slider:before{transform:translateX(20px);}
   .receipt-section-title{font-size:8.5px!important;letter-spacing:.12em!important;text-transform:uppercase!important;font-weight:700!important;color:var(--brand)!important;margin-bottom:7px!important;padding-bottom:4px!important;border-bottom:1px solid var(--border)!important;}
   .receipt-row{display:flex!important;padding:2.5px 0!important;font-size:11px!important;line-height:1.28!important;}
   .receipt-row .r-label{min-width:140px!important;color:var(--brand-light)!important;font-weight:500!important;}
-  .receipt-row .r-value{color:var(--text)!important;}
+  .receipt-row .r-value{color:var(--text)!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;}
   .receipt-file-gallery{gap:5px!important;}
   .receipt-file-thumb{width:72px!important;}
   .receipt-file-thumb img{width:72px!important;height:54px!important;}
@@ -2105,7 +2105,7 @@ function salvarInformacoes() {
     const prodName = (document.getElementById('pb-prod-input-' + bid) || {}).value || 'â€”';
     const modulos = (document.getElementById('pb-mod-' + bid) || {}).value || 'â€”';
     const itemDesc = (document.getElementById('pb-itemdesc-' + bid) || {}).value || 'â€”';
-    const descricao = (document.getElementById('pb-desc-' + bid) || {}).value || 'â€”';
+    const descricao = receiptFieldValue('pb-desc-' + bid);
 
     // Q1
     const q1El = document.getElementById('pb-q1-' + bid);
@@ -2256,6 +2256,13 @@ function escapeHtml(value) {
     .replace(/'/g, '&#039;');
 }
 
+function receiptFieldValue(id) {
+  const el = document.getElementById(id);
+  if (!el) return 'â€”';
+  const value = ('value' in el ? el.value : el.textContent || '').trim();
+  return value || 'â€”';
+}
+
 function receiptRow(label, value) {
   return '<div class="receipt-row"><span class="r-label">' + escapeHtml(label) + '</span><span class="r-value">' + escapeHtml(value) + '</span></div>';
 }
@@ -2374,3 +2381,5 @@ function clientSearchClear() {
 </script>
 </body>
 </html>
+
+
